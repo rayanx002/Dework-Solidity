@@ -3,7 +3,7 @@
 pragma solidity >=0.8.2 <0.9.0;
 
 import {FreelancerProfile} from "./types/DeworkTypes.sol";
-import {EmployerProfile} from "./types/DeworkTypes.sol";
+import {EmployerProfile, CreateJobListingInput} from "./types/DeworkTypes.sol";
 
 contract Dework{
 
@@ -15,7 +15,13 @@ contract Dework{
     FreelancerProfile[] public freelancerProfiles;
     EmployerProfile[] public employerProfiles;
 
+    mapping(uint256 => address) public freelancerIdToAddress;
+    mapping(uint256 => address) public employerIdToAddress;
 
+    event FreelancerProfileRegistered(uint256 freelancerId, address caller);
+    event EmployerProfileRegistered(uint256 employerId, address caller);
+
+    error Dework_IncorrectJobCreationFee(uint256 expectedFee, uint256 actualFee);
 
     constructor(address _initialOwner){
         initialOwner = _initialOwner;
@@ -45,9 +51,13 @@ contract Dework{
         });
 
         freelancerProfiles.push(freelancerProfile);
+
+        freelancerIdToAddress[freelancerId] = msg.sender;
+
+        emit FreelancerProfileRegistered(freelancerId, msg.sender);
     }
 
-
+       
 
     function getNumberOfRegisteredEmployers() public view returns(uint256){  
         return employerProfiles.length;
@@ -67,6 +77,9 @@ contract Dework{
         });
 
         employerProfiles.push(employerProfile);
+        employerIdToAddress[employerId] = msg.sender;
+
+        emit EmployerProfileRegistered(employerId, msg.sender);
     }
 
 
@@ -84,4 +97,16 @@ contract Dework{
 
         return freelancerProfiles;
     }
+
+    function createJobListing(
+      uint256 employerId,
+      CreateJobListingInput calldata jobListingInput
+      ) external payable{
+
+        uint256 fixedPriceForJob = jobListingInput.fixedPriceInWei;
+        if(msg.value != fixedPriceForJob){
+            revert Dework_IncorrectJobCreationFee(fixedPriceForJob, msg.value);
+        }
+      }
+
 }
