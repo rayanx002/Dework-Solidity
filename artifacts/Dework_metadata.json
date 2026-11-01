@@ -86,12 +86,12 @@
 							},
 							{
 								"internalType": "string",
-								"name": "jobDescription",
+								"name": "description",
 								"type": "string"
 							},
 							{
 								"internalType": "uint256",
-								"name": "deadline",
+								"name": "deadlineTimestamp",
 								"type": "uint256"
 							},
 							{
@@ -220,6 +220,25 @@
 					{
 						"internalType": "uint256",
 						"name": "hourlyRateWei",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "employerId",
+						"type": "uint256"
+					}
+				],
+				"name": "getCreatedJobList",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
 						"type": "uint256"
 					}
 				],
@@ -394,26 +413,27 @@
 			"bytecodeHash": "ipfs"
 		},
 		"optimizer": {
-			"enabled": false,
+			"enabled": true,
 			"runs": 200
 		},
-		"remappings": []
+		"remappings": [],
+		"viaIR": true
 	},
 	"sources": {
 		"contracts/Dework.sol": {
-			"keccak256": "0x33bae8e1e1dddc3c351937414872fdd8f620ea426637775cc29617b06be46b8c",
+			"keccak256": "0xc02358d088df2d184de43e607afaa2a32a666886523b702a3b5395ac13eb9458",
 			"license": "GPL-3.0",
 			"urls": [
-				"bzz-raw://4d1636045d62df764d32c85f6181f2ac14b0ea6610b847cc3870d568fa944f76",
-				"dweb:/ipfs/Qma8nWy3KL4VEhLFb5NVXS3vnv2LppgE7cTFjy2xuzhtQ2"
+				"bzz-raw://52df557a1d7946a93285a841d12df95a78fcd97c016b6a073d271b9e8427d8b8",
+				"dweb:/ipfs/QmNeuPqpE5TqEYBZQQmpqmVtBExFyrFoWBv4cM5a8wq2Pq"
 			]
 		},
 		"contracts/types/DeworkTypes.sol": {
-			"keccak256": "0xebbc250673446058fa0f6a8ce7e9f62374cbd93d1df491230660cd832a14f113",
+			"keccak256": "0x89e44dfd05882551970643245c1413703c3e8cf2bb90920bac2a8a10384ae290",
 			"license": "GPL-3.0",
 			"urls": [
-				"bzz-raw://34b323632743308b377ef44531ac13de8c870e80d640c6dcddbd95ef35b8bd77",
-				"dweb:/ipfs/QmQMex6Uxg6ryqpGwH7b76iNgnfXG2eVzK1drUGDk2synt"
+				"bzz-raw://31f222283ca6342b39f2b05049fb79e29ef22282c78f05ba1a36589a9fe4ae77",
+				"dweb:/ipfs/QmT4JyvPHNMDyzEU9KkGDVBp4vitTm65Ce3BJNXYs3V6YX"
 			]
 		}
 	},

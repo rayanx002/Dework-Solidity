@@ -3,7 +3,7 @@
 pragma solidity >=0.8.2 <0.9.0;
 
 import {FreelancerProfile} from "./types/DeworkTypes.sol";
-import {EmployerProfile, CreateJobListingInput} from "./types/DeworkTypes.sol";
+import {EmployerProfile, CreateJobListingInput, JobListing} from "./types/DeworkTypes.sol";
 
 contract Dework{
 
@@ -73,7 +73,8 @@ contract Dework{
             id: employerId,
             name: employername,
             wallet:msg.sender,
-            isHiring: false
+            isHiring: false,
+            jobListing: new JobListing[](0)
         });
 
         employerProfiles.push(employerProfile);
@@ -98,6 +99,19 @@ contract Dework{
         return freelancerProfiles;
     }
 
+
+    function getCreatedJobList(uint256 employerId) public view returns(uint256){
+
+        employerProfiles[employerId].jobListing.length;
+    }
+
+    function _getEmployerProfile(uint256 employerId) internal view returns(EmployerProfile storage){
+        return employerProfiles[employerId];
+
+    }
+
+
+
     function createJobListing(
       uint256 employerId,
       CreateJobListingInput calldata jobListingInput
@@ -107,6 +121,26 @@ contract Dework{
         if(msg.value != fixedPriceForJob){
             revert Dework_IncorrectJobCreationFee(fixedPriceForJob, msg.value);
         }
+
+
+        EmployerProfile storage employerProfile = _getEmployerProfile(employerId);
+
+        uint256 jobId = getCreatedJobList(employerId);
+
+        JobListing memory newJob = JobListing({
+
+            id: jobId,
+            title: jobListingInput.title,
+            description: jobListingInput.description,
+            deadlineTimestamp: jobListingInput.deadlineTimestamp,
+            isOpen: true,
+            fixedPriceInWei: jobListingInput.fixedPriceInWei,
+            hiredFreelancerId: 0,
+            hasHiredFreelancer: false,
+            isPaid: false
+        });
+
+        employerProfile.jobListing.push(newJob);
       }
 
 }

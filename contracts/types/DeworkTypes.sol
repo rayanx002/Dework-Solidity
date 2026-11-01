@@ -18,12 +18,26 @@ struct EmployerProfile{
     string name;
     address wallet;
     bool isHiring;
+    JobListing[] jobListing;
 }
 
 struct CreateJobListingInput{
 
     string title;
-    string jobDescription;
-    uint256 deadline;
+    string description;
+    uint256 deadlineTimestamp;
     uint256 fixedPriceInWei;
 }
+
+struct JobListing{
+    uint256 id;
+    string title;
+    string description;
+    uint256 deadlineTimestamp;
+    bool isOpen;
+    uint256 fixedPriceInWei;
+    uint256 hiredFreelancerId;
+    bool hasHiredFreelancer;
+    bool isPaid;
+}
+
